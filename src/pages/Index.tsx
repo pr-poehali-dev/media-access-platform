@@ -9,6 +9,7 @@ const Index = () => {
   const [showAdminChat, setShowAdminChat] = useState(false);
   const [showVideoCall, setShowVideoCall] = useState(false);
   const [showAIOrder, setShowAIOrder] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [aiOrderAmount, setAiOrderAmount] = useState('');
   const [aiOrderDescription, setAiOrderDescription] = useState('');
 
@@ -69,12 +70,15 @@ const Index = () => {
         onAIOrderClick={() => setShowAIOrder(!showAIOrder)}
         onVideoCallClick={() => setShowVideoCall(!showVideoCall)}
         onAdminChatClick={() => setShowAdminChat(!showAdminChat)}
+        onMenuClick={() => setShowMenu(!showMenu)}
       />
 
       <Navigation 
         activeSection={activeSection}
         menuItems={menuItems}
         onSectionChange={setActiveSection}
+        isOpen={showMenu}
+        onClose={() => setShowMenu(false)}
       />
 
       <ContentSections 
