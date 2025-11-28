@@ -14,43 +14,59 @@ interface ContentSectionsProps {
 
 const ContentSections = ({ activeSection, contentCards, animeCards, activeRooms }: ContentSectionsProps) => {
   return (
-    <main className="pt-[140px] pb-20 px-4">
+    <main className="container mx-auto px-4 py-8">
       {activeSection === 'home' && (
         <div className="space-y-8 animate-fade-in">
-          <div className="relative rounded-xl overflow-hidden h-[250px] bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20">
+          <div className="relative rounded-2xl overflow-hidden h-[400px] bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20">
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center space-y-3 p-6">
-                <h2 className="text-3xl font-heading font-bold">Добро пожаловать</h2>
-                <p className="text-sm text-muted-foreground">Фильмы, сериалы, игры, музыка</p>
-                <Button className="gap-2 mt-4">
-                  <Icon name="Play" size={18} />
-                  Начать просмотр
-                </Button>
+              <div className="text-center space-y-4 p-8">
+                <h2 className="text-5xl font-heading font-bold">Добро пожаловать в Кинозвезду</h2>
+                <p className="text-xl text-muted-foreground">Фильмы, сериалы, игры, музыка и многое другое</p>
+                <div className="flex gap-3 justify-center mt-6">
+                  <Button size="lg" className="gap-2">
+                    <Icon name="Play" size={20} />
+                    Начать просмотр
+                  </Button>
+                  <Button size="lg" variant="outline" className="gap-2">
+                    <Icon name="Upload" size={20} />
+                    Загрузить контент
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-heading font-bold flex items-center gap-2">
-                <Icon name="TrendingUp" size={20} className="text-primary" />
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-heading font-bold flex items-center gap-2">
+                <Icon name="TrendingUp" size={24} className="text-primary" />
                 Популярное сейчас
               </h3>
-              <Button variant="ghost" size="sm">Все</Button>
+              <Button variant="ghost">Смотреть всё</Button>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {contentCards.map((item, idx) => (
-                <Card key={idx} className="group overflow-hidden active:scale-95 transition-transform">
-                  <div className="aspect-[2/3] bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center text-4xl relative overflow-hidden">
+                <Card key={idx} className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="aspect-video bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center text-6xl relative overflow-hidden">
                     {item.image}
-                    <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
-                      <Icon name="Star" size={12} className="text-yellow-500" />
-                      <span className="text-xs font-medium">{item.rating}</span>
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                      <Button size="icon" variant="secondary" className="rounded-full">
+                        <Icon name="Play" size={20} />
+                      </Button>
+                      <Button size="icon" variant="secondary" className="rounded-full">
+                        <Icon name="Plus" size={20} />
+                      </Button>
                     </div>
                   </div>
-                  <div className="p-2 space-y-1">
-                    <h4 className="font-medium text-sm line-clamp-2">{item.title}</h4>
-                    <Badge variant="secondary" className="text-xs">{item.type}</Badge>
+                  <div className="p-4 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Badge variant="secondary">{item.type}</Badge>
+                      <div className="flex items-center gap-1 text-yellow-500">
+                        <Icon name="Star" size={14} />
+                        <span className="text-sm font-medium">{item.rating}</span>
+                      </div>
+                    </div>
+                    <h4 className="font-heading font-semibold">{item.title}</h4>
                   </div>
                 </Card>
               ))}
@@ -58,30 +74,32 @@ const ContentSections = ({ activeSection, contentCards, animeCards, activeRooms 
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-heading font-bold flex items-center gap-2">
-                <Icon name="Users" size={20} className="text-accent" />
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-heading font-bold flex items-center gap-2">
+                <Icon name="Users" size={24} className="text-accent" />
                 Активные комнаты
               </h3>
-              <Button variant="ghost" size="sm" className="gap-1">
-                <Icon name="Plus" size={14} />
-                Создать
+              <Button variant="ghost" className="gap-2">
+                <Icon name="Plus" size={16} />
+                Создать комнату
               </Button>
             </div>
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {activeRooms.map((room, idx) => (
-                <Card key={idx} className="p-4 active:scale-95 transition-transform">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold">{room.name}</h4>
-                    <Badge variant="outline" className="gap-1 text-xs">
+                <Card key={idx} className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h4 className="font-heading font-semibold text-lg">{room.name}</h4>
+                      <p className="text-sm text-muted-foreground">{room.topic}</p>
+                    </div>
+                    <Badge variant="outline" className="gap-1">
                       <Icon name="Users" size={12} />
                       {room.users}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">{room.topic}</p>
                   <Button className="w-full gap-2" size="sm">
-                    <Icon name="LogIn" size={14} />
-                    Войти
+                    <Icon name="LogIn" size={16} />
+                    Войти в комнату
                   </Button>
                 </Card>
               ))}
