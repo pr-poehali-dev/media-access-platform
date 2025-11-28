@@ -19,7 +19,7 @@ const Header = ({ onAIOrderClick, onVideoCallClick, onAdminChatClick }: HeaderPr
               <Icon name="Sparkles" size={20} className="text-primary-foreground" />
             </div>
             <h1 className="text-2xl font-heading font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              MediaHub
+              Кинозвезда
             </h1>
           </div>
 

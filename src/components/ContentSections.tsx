@@ -20,7 +20,7 @@ const ContentSections = ({ activeSection, contentCards, animeCards, activeRooms 
           <div className="relative rounded-2xl overflow-hidden h-[400px] bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20">
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center space-y-4 p-8">
-                <h2 className="text-5xl font-heading font-bold">Добро пожаловать в MediaHub</h2>
+                <h2 className="text-5xl font-heading font-bold">Добро пожаловать в Кинозвезду</h2>
                 <p className="text-xl text-muted-foreground">Фильмы, сериалы, игры, музыка и многое другое</p>
                 <div className="flex gap-3 justify-center mt-6">
                   <Button size="lg" className="gap-2">
