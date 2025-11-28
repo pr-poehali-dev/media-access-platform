@@ -12,9 +12,13 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [showAdminChat, setShowAdminChat] = useState(false);
   const [showVideoCall, setShowVideoCall] = useState(false);
+  const [showAIOrder, setShowAIOrder] = useState(false);
+  const [aiOrderAmount, setAiOrderAmount] = useState('');
+  const [aiOrderDescription, setAiOrderDescription] = useState('');
 
   const menuItems = [
     { id: 'home', label: 'Главная', icon: 'Home' },
+    { id: 'anime', label: 'Аниме', icon: 'Sparkles' },
     { id: 'movies', label: 'Фильмы', icon: 'Film' },
     { id: 'series', label: 'Сериалы', icon: 'Tv' },
     { id: 'games', label: 'Игры', icon: 'Gamepad2' },
@@ -33,6 +37,23 @@ const Index = () => {
     { title: 'Синтвейв микс', type: 'Музыка', rating: 8.8, image: '🎵', category: 'music' },
     { title: 'Прямой эфир: Концерт', type: 'Трансляция', rating: 8.3, image: '📡', category: 'streams' },
     { title: 'Тайны вселенной', type: 'Фильм', rating: 8.7, image: '🌌', category: 'movies' },
+  ];
+
+  const animeCards = [
+    { title: 'Наруто: Ураганные хроники', type: 'Аниме', rating: 9.5, image: '🍥', episodes: 500, status: 'Завершён' },
+    { title: 'Наруто', type: 'Аниме', rating: 9.3, image: '🦊', episodes: 220, status: 'Завершён' },
+    { title: 'Боруто', type: 'Аниме', rating: 8.2, image: '⚡', episodes: 293, status: 'Онгоинг' },
+    { title: 'Атака титанов', type: 'Аниме', rating: 9.8, image: '⚔️', episodes: 87, status: 'Завершён' },
+    { title: 'Моя геройская академия', type: 'Аниме', rating: 9.1, image: '💥', episodes: 138, status: 'Онгоинг' },
+    { title: 'Ванпанчмен', type: 'Аниме', rating: 9.2, image: '👊', episodes: 24, status: 'Онгоинг' },
+    { title: 'Клинок, рассекающий демонов', type: 'Аниме', rating: 9.4, image: '🗡️', episodes: 44, status: 'Онгоинг' },
+    { title: 'Токийский гуль', type: 'Аниме', rating: 8.9, image: '🎭', episodes: 48, status: 'Завершён' },
+  ];
+
+  const aiServices = [
+    { name: 'Базовый', price: 500, features: ['Простые запросы', 'До 10 запросов/день', 'Базовая поддержка'], icon: 'Zap' },
+    { name: 'Продвинутый', price: 1500, features: ['Сложные запросы', 'До 50 запросов/день', 'Приоритетная поддержка', 'API доступ'], icon: 'Sparkles', popular: true },
+    { name: 'Профессиональный', price: 5000, features: ['Неограниченные запросы', 'Кастомные модели', 'VIP поддержка 24/7', 'Интеграции'], icon: 'Rocket' },
   ];
 
   const activeRooms = [
@@ -69,6 +90,14 @@ const Index = () => {
             </div>
 
             <div className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={() => setShowAIOrder(!showAIOrder)}
+                className="relative"
+              >
+                <Icon name="Bot" size={20} />
+              </Button>
               <Button 
                 variant="ghost" 
                 size="icon"
@@ -273,6 +302,69 @@ const Index = () => {
           </div>
         )}
 
+        {activeSection === 'anime' && (
+          <div className="space-y-6 animate-fade-in">
+            <div className="flex items-center justify-between">
+              <h2 className="text-3xl font-heading font-bold flex items-center gap-2">
+                <Icon name="Sparkles" size={32} className="text-primary" />
+                Аниме
+              </h2>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm">Жанры</Button>
+                <Button variant="outline" size="sm">Топ</Button>
+                <Button variant="outline" size="sm">Онгоинги</Button>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl p-8 mb-8">
+              <div className="flex items-center gap-6">
+                <div className="text-8xl">🍥</div>
+                <div className="flex-1">
+                  <Badge className="mb-2">Популярная коллекция</Badge>
+                  <h3 className="text-3xl font-heading font-bold mb-2">Вселенная Наруто</h3>
+                  <p className="text-muted-foreground mb-4">Полная коллекция: Наруто, Наруто: Ураганные хроники, Боруто. Более 1000 эпизодов легендарной истории о ниндзя.</p>
+                  <Button size="lg" className="gap-2">
+                    <Icon name="Play" size={20} />
+                    Начать просмотр
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {animeCards.map((item, idx) => (
+                <Card key={idx} className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="aspect-video bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center text-6xl relative overflow-hidden">
+                    {item.image}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                      <Button size="icon" variant="secondary" className="rounded-full">
+                        <Icon name="Play" size={20} />
+                      </Button>
+                      <Button size="icon" variant="secondary" className="rounded-full">
+                        <Icon name="Plus" size={20} />
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="p-4 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Badge variant="secondary">{item.type}</Badge>
+                      <div className="flex items-center gap-1 text-yellow-500">
+                        <Icon name="Star" size={14} />
+                        <span className="text-sm font-medium">{item.rating}</span>
+                      </div>
+                    </div>
+                    <h4 className="font-heading font-semibold">{item.title}</h4>
+                    <div className="flex items-center justify-between text-sm text-muted-foreground">
+                      <span>{item.episodes} эп.</span>
+                      <Badge variant="outline" className="text-xs">{item.status}</Badge>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
         {['movies', 'series', 'games', 'music', 'streams'].includes(activeSection) && (
           <div className="space-y-6 animate-fade-in">
             <div className="flex items-center justify-between">
@@ -384,6 +476,98 @@ const Index = () => {
               </Button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* AI Order Modal */}
+      {showAIOrder && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 animate-fade-in">
+          <Card className="w-full max-w-4xl max-h-[90vh] flex flex-col">
+            <div className="p-6 border-b border-border flex items-center justify-between">
+              <h3 className="text-2xl font-heading font-semibold flex items-center gap-2">
+                <Icon name="Bot" size={24} className="text-primary" />
+                Заказ ИИ подразделения
+              </h3>
+              <Button size="icon" variant="ghost" onClick={() => setShowAIOrder(false)}>
+                <Icon name="X" size={20} />
+              </Button>
+            </div>
+            
+            <ScrollArea className="flex-1 p-6">
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {aiServices.map((service, idx) => (
+                    <Card 
+                      key={idx} 
+                      className={`p-6 cursor-pointer transition-all hover:shadow-lg relative ${service.popular ? 'border-primary border-2' : ''}`}
+                    >
+                      {service.popular && (
+                        <Badge className="absolute -top-2 -right-2">Популярное</Badge>
+                      )}
+                      <div className="text-center space-y-4">
+                        <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto">
+                          <Icon name={service.icon as any} size={32} className="text-primary" />
+                        </div>
+                        <div>
+                          <h4 className="font-heading font-bold text-xl mb-2">{service.name}</h4>
+                          <div className="text-3xl font-bold text-primary mb-4">{service.price} ₽</div>
+                        </div>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          {service.features.map((feature, i) => (
+                            <li key={i} className="flex items-center gap-2">
+                              <Icon name="Check" size={16} className="text-primary" />
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+                        <Button className="w-full">Выбрать</Button>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+
+                <div className="border-t border-border pt-6">
+                  <h4 className="font-heading font-semibold text-lg mb-4">Индивидуальный заказ</h4>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Сумма (₽)</label>
+                      <Input 
+                        type="number" 
+                        placeholder="Введите сумму" 
+                        value={aiOrderAmount}
+                        onChange={(e) => setAiOrderAmount(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Описание задачи</label>
+                      <textarea 
+                        className="w-full min-h-[120px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                        placeholder="Опишите, какое ИИ подразделение вам нужно и какие задачи оно должно решать..."
+                        value={aiOrderDescription}
+                        onChange={(e) => setAiOrderDescription(e.target.value)}
+                      />
+                    </div>
+                    <Button size="lg" className="w-full gap-2">
+                      <Icon name="Send" size={20} />
+                      Отправить заказ
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="bg-muted/50 rounded-lg p-4">
+                  <h5 className="font-semibold mb-2 flex items-center gap-2">
+                    <Icon name="Info" size={16} className="text-primary" />
+                    Что такое ИИ подразделение?
+                  </h5>
+                  <p className="text-sm text-muted-foreground">
+                    Это персонализированный ИИ ассистент, который будет работать специально для ваших задач: создание контента, 
+                    модерация, аналитика, автоматизация процессов и многое другое. Выберите готовый тариф или закажите 
+                    индивидуальное решение под ваши нужды.
+                  </p>
+                </div>
+              </div>
+            </ScrollArea>
+          </Card>
         </div>
       )}
 
